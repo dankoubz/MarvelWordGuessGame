@@ -1,0 +1,36 @@
+body {
+    background: #1a1a1a;
+    color: white;
+}
+
+
+/* Fonts */
+
+@font-face {
+    font-family: Avengers;
+    src: url(Avengers-Bold.ttf);
+}
+
+@font-face {
+    font-family: Marvel;
+    src: url(Marvel-Regular.ttf);
+}
+
+h1 {
+    font-size: 3em;
+    line-height: 1.5em;
+    font-family: Avengers;
+    letter-spacing: .035em;
+}
+
+h2 {
+    font-size: 2em;
+    line-height: 1.3em;
+    font-family: Marvel;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 1.3em;
+    line-height: 1.1em;
+}
