@@ -4,14 +4,51 @@
 // Rules + Steps
 
 // START GAME
+var startGame;
+var mainGame;
+
 // start game, "press any key to get started"
 // event listen to keyup command for any key
-// add display none to welcome screen to remove screen
-// add display block for main game content
+document.onkeyup = function() {
+    // add display none to welcome screen to remove screen
+    var startGame = startGame === 1;
+    document.getElementById("welcome").style.display = "none";
+    // make startGame varaible true as a session has started 
+    // add display block for main game content
+    var mainGame = document.getElementById("main-game").style.display = "block";
+};
+
+console.log(startGame);
+// LEVEL OF DIFFICULTY
+// Easy = characters, medium = movies + hard = quotes
+// make buttons that once selected changes the dificulty
+// listen to on click event and swithc state to truthy
+var easyMode;
+var mediumMode;
+var hardMode;
+
+function gameMode() {
+    if (startGame === 1) {
+        var easyMode = 1;
+        console.log(easyMode);
+    }
+}
+
+/*
+document.getElementById("#medium").onclick = function() {
+    var mediumMode = true;
+    console.log(mediumMode);
+};
+*/
 
 // WORD PHRASES OBJECT + ARRAY
 // create an object called Marvel
 // within object create properties charactsers, quotes and movie titles.
+var marvel = {
+    characters: ["Thor", "Iron Man", "Hulk"],
+    movies: ["Iron Man", "Avengers Age of Ultron", "Guardians of the Galaxy"],
+    quotes: ["I am Iron Man", "Your friendly neighbourhood Spider-man"]
+};
 // each property should have its own array
 // first choose a random category / propery within the Marvel object
 // add math.floor(math.random * length of array) to calculate random choice of array

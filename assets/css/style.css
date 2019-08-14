@@ -17,20 +17,82 @@ body {
 }
 
 h1 {
-    font-size: 3em;
-    line-height: 1.5em;
-    font-family: Avengers;
-    letter-spacing: .035em;
+    font-size: 6em;
+    line-height: 1em;
+    font-family: Marvel;
+    text-transform: uppercase;
+    color: #ed1d24;
 }
 
 h2 {
+    font-size: 3em;
+    line-height: 1.1em;
+    font-family: Marvel;
+    text-transform: uppercase;
+}
+
+h3 {
     font-size: 2em;
     line-height: 1.3em;
     font-family: Marvel;
     text-transform: uppercase;
 }
 
-h3 {
-    font-size: 1.3em;
-    line-height: 1.1em;
+p {
+    font-size: 1.8em;
+    line-height: 1.3em;
+    font-family: Marvel;
+    text-transform: uppercase;
+}
+
+
+/*  Main, Section and As */
+
+main section {
+    height: 800px;
+    border: 3px solid #4D4D4D;
+    border-radius: 10px;
+}
+
+
+/* Animation */
+
+@keyframes pulse {
+    0% {
+        opacity: 100%;
+    }
+    50% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+.pulse {
+    -webkit-animation: pusle infinite 3s;
+    animation: pulse infinite 3s;
+}
+
+
+/* Game Screen */
+
+#main-game {
+    display: none;
+}
+
+
+/* Media Queires */
+
+@media only screen and (max-width: 768px) {
+    h3 {
+        font-size: 1.8em;
+    }
+    main section {
+        height: 100vh;
+        border: none;
+    }
 }
