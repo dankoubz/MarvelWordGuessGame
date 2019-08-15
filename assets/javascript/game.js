@@ -4,42 +4,122 @@
 // Rules + Steps
 
 // START GAME
-var startGame;
-var mainGame;
+// declare variables
+var gameSession = false;
+var mainGame = 0;
+console.log("Game Session is " + gameSession);
+
+// call on start + parameter to only call once
+onStart(mainGame === 0);
 
 // start game, "press any key to get started"
-// event listen to keyup command for any key
-document.onkeyup = function() {
-    // add display none to welcome screen to remove screen
-    var startGame = startGame === 1;
-    document.getElementById("welcome").style.display = "none";
-    // make startGame varaible true as a session has started 
-    // add display block for main game content
-    var mainGame = document.getElementById("main-game").style.display = "block";
+function onStart() {
+    document.onkeyup = function startGame() {
+        if (mainGame < 1) {
+            // set display to none, remove welcome screen
+            document.getElementById("welcome").style.display = "none";
+            // add display block for main game content
+            document.getElementById("main-game").style.display = "block";
+            // make gameSession varaible true as a session has started 
+            gameSession = true;
+            // console function status
+            console.log("Game Session is " + gameSession);
+            // set mainGame to 1, so function doesn't run again
+            mainGame = 1;
+            // call function
+            setAutoDifficulty();
+            // condition if key up has been used	
+        } else if (mainGame === 1) {
+            console.log("your game is already loaded");
+        }
+    }
 };
 
-console.log(startGame);
 // LEVEL OF DIFFICULTY
-// Easy = characters, medium = movies + hard = quotes
-// make buttons that once selected changes the dificulty
-// listen to on click event and swithc state to truthy
+// delcare variables of modes
 var easyMode;
 var mediumMode;
 var hardMode;
 
-function gameMode() {
-    if (startGame === 1) {
-        var easyMode = 1;
-        console.log(easyMode);
+// Once gameSession is true, run this function to set auto game mode
+function setAutoDifficulty() {
+    // Making sure condition is true
+    if (gameSession === true) {
+        // find easy id for button
+        var activeMode = document.getElementById("easy");
+        // set class of buttin to active, css stylinh
+        activeMode.classList.add("active");
+        // set variable easyMode to true - call later to use object arrays
+        easyMode = true;
+        console.log("Your mode is set to easy");
+        // set other modes to false
+        mediumMode = false;
+        hardMode = false;
+        console.log("Both medium and hard modes are " + mediumMode + " and " + hardMode);
+    } else {
+        // if statement is false tell console
+        console.log("no auto difficulty set");
     }
-}
-
-/*
-document.getElementById("#medium").onclick = function() {
-    var mediumMode = true;
-    console.log(mediumMode);
 };
-*/
+
+// make buttons that once selected changes the dificulty
+// Easy = characters, medium = movies + hard = quotes
+function changeDifficulty() {
+    // set var to id of button in html
+    var easyButton = document.getElementById('easy');
+    var mediumButton = document.getElementById('medium');
+    var hardButton = document.getElementById('hard');
+
+    // add listener to variables so button click triiger id
+    easyButton.addEventListener("click", changeToEasy);
+    mediumButton.addEventListener("click", changeToMedium);
+    hardButton.addEventListener("click", changeToHard);
+
+    // function to change to easy level
+    function changeToEasy() {
+        // add remove active styling to buttons
+        easyButton.classList.add("active");
+        mediumButton.classList.remove("active");
+        hardButton.classList.remove("active");
+        console.log("easy button clicked");
+        // change state of global variable
+        easyMode = true;
+        mediumMode = false;
+        hardMode = false;
+        console.log("Easy mode = " + easyMode);
+    }
+
+    // function to change to medium level
+    function changeToMedium() {
+        // add remove active styling to buttons
+        easyButton.classList.remove("active");
+        mediumButton.classList.add("active");
+        hardButton.classList.remove("active");
+        console.log("medium button clicked");
+        // change state of global variable
+        easymMode = false;
+        mediumMode = true;
+        hardMode = false;
+        console.log("Medium mode = " + mediumMode);
+    }
+
+    // call function to change to hard level
+    function changeToHard() {
+        // add remove active styling to buttons
+        easyButton.classList.remove("active");
+        mediumButton.classList.remove("active");
+        hardButton.classList.add("active");
+        console.log("hard button clicked");
+        // change state of global variable
+        easymMode = false;
+        mediumMode = false;
+        hardMode = true;
+        console.log("Hard mode = " + hardMode);
+    }
+};
+
+// call function to allow button to change difficulty
+changeDifficulty();
 
 // WORD PHRASES OBJECT + ARRAY
 // create an object called Marvel
@@ -47,7 +127,7 @@ document.getElementById("#medium").onclick = function() {
 var marvel = {
     characters: ["Thor", "Iron Man", "Hulk"],
     movies: ["Iron Man", "Avengers Age of Ultron", "Guardians of the Galaxy"],
-    quotes: ["I am Iron Man", "Your friendly neighbourhood Spider-man"]
+    quotes: ["I am Iron Man", , "Hulk like raging fire", "Your friendly neighbourhood Spiderman"]
 };
 // each property should have its own array
 // first choose a random category / propery within the Marvel object

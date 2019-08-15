@@ -85,6 +85,29 @@ main section {
 }
 
 
+/* Buttons */
+
+.btn-secondary {
+    background: #333333 !important;
+    border: white 1px solid !important;
+}
+
+.btn-secondary:hover {
+    background: #1a1a1a !important;
+    border: white solid 1px !important;
+}
+
+.active {
+    background: #ed1d24 !important;
+    border: #ed1d24 solid 1px !important;
+}
+
+.active:hover {
+    background: #ba161c !important;
+    border: #ba161c 1px solid !important;
+}
+
+
 /* Media Queires */
 
 @media only screen and (max-width: 768px) {
