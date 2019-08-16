@@ -27,7 +27,7 @@ function onStart() {
             // set mainGame to 1, so function doesn't run again
             mainGame = 1;
             // call function
-            setAutoDifficulty();
+            setAutoDifficulty("autoEasy");
             // condition if key up has been used	
         } else if (mainGame === 1) {
             console.log("your game is already loaded");
@@ -37,25 +37,16 @@ function onStart() {
 
 // LEVEL OF DIFFICULTY
 // delcare variables of modes
-var easyMode;
-var mediumMode;
-var hardMode;
-
-// Once gameSession is true, run this function to set auto game mode
-function setAutoDifficulty() {
+// run this function to set auto game mode
+function setAutoDifficulty(auto) {
     // Making sure condition is true
-    if (gameSession === true) {
+    if (auto === "autoEasy") {
         // find easy id for button
         var activeMode = document.getElementById("easy");
         // set class of buttin to active, css stylinh
         activeMode.classList.add("active");
-        // set variable easyMode to true - call later to use object arrays
-        easyMode = true;
         console.log("Your mode is set to easy");
-        // set other modes to false
-        mediumMode = false;
-        hardMode = false;
-        console.log("Both medium and hard modes are " + mediumMode + " and " + hardMode);
+        console.log("Both medium and hard modes are false");
     } else {
         // if statement is false tell console
         console.log("no auto difficulty set");
@@ -82,11 +73,8 @@ function changeDifficulty() {
         mediumButton.classList.remove("active");
         hardButton.classList.remove("active");
         console.log("easy button clicked");
-        // change state of global variable
-        easyMode = true;
-        mediumMode = false;
-        hardMode = false;
-        console.log("Easy mode = " + easyMode);
+        // call a function in the phrases
+        selectPhrases("easy");
     }
 
     // function to change to medium level
@@ -96,11 +84,8 @@ function changeDifficulty() {
         mediumButton.classList.add("active");
         hardButton.classList.remove("active");
         console.log("medium button clicked");
-        // change state of global variable
-        easymMode = false;
-        mediumMode = true;
-        hardMode = false;
-        console.log("Medium mode = " + mediumMode);
+        // call a function in the phrases
+        selectPhrases("medium");
     }
 
     // call function to change to hard level
@@ -110,11 +95,8 @@ function changeDifficulty() {
         mediumButton.classList.remove("active");
         hardButton.classList.add("active");
         console.log("hard button clicked");
-        // change state of global variable
-        easymMode = false;
-        mediumMode = false;
-        hardMode = true;
-        console.log("Hard mode = " + hardMode);
+        // call a function in the phrases
+        selectPhrases("hard");
     }
 };
 
@@ -129,10 +111,23 @@ var marvel = {
     movies: ["Iron Man", "Avengers Age of Ultron", "Guardians of the Galaxy"],
     quotes: ["I am Iron Man", , "Hulk like raging fire", "Your friendly neighbourhood Spiderman"]
 };
-// each property should have its own array
-// first choose a random category / propery within the Marvel object
+
+// create a function that select's and array based on difficulty selected
+function selectPhrases(mode) {
+    if (mode === "easy") {
+        console.log("Easy mode uses character phrases");
+        console.log(marvel.characters[Math.floor(Math.random() * marvel.characters.length)]);
+    } else if (mode === "medium") {
+        console.log("Medium mode uses movie titles");
+    } else if (mode === "hard") {
+        console.log("Hard mode uses quotes");
+    }
+}
+// check to see if var of game mode is true, to choose 
+
 // add math.floor(math.random * length of array) to calculate random choice of array
-// then again, randomly choose index within array properity
+
+
 
 // DISPLAY AND RANDOMISE PHRASES
 // get chosen phrase from function
@@ -140,11 +135,40 @@ var marvel = {
 // find character length of phrase
 // display the character length as underline characters
 
-// LISTEN AND DISPLAY LETTERS
+// CLICK LETTERS AND DISPLAY LETTERS
+var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+    'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+    't', 'u', 'v', 'w', 'x', 'y', 'z'
+];
+var drinkList = [
+    "Coffee: $5",
+    "Espresso: $7",
+    "Cappuccino: $6",
+    "Latte: $4",
+    "Tea: $3",
+    "Ice Coffee: $6",
+    "Ice Espresso: $8",
+    "Ice Latte: $6",
+    "Ice Tea: $4"
+];
+
+var keyboardBtns = document.getElementById('keyboard');
+
+keyboardDisplay();
+
+function keyboardDisplay() {
+    for (var i = 0; i < alphabet.length; i++) {
+        var newBtn = document.createElement("button");
+        keyboardBtns.appendChild(newBtn);
+        newBtn.textContent = alphabet[i];
+        newBtn.classList.add("keyboardBtn");
+    }
+}
+
+
+
 // allow users to select letters to complete word
 // listen to keyup letters from user
-// run a loop function to place letters in the correct places
-// after each loop, treat each letter as a guess
 
 // SHOW CORRECT AND WRONG LETTERS
 // check user inputs
