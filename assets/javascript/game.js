@@ -47,6 +47,7 @@ function setAutoDifficulty(auto) {
         activeMode.classList.add("active");
         console.log("Your mode is set to easy");
         console.log("Both medium and hard modes are false");
+        selectPhrases("easy");
     } else {
         // if statement is false tell console
         console.log("no auto difficulty set");
@@ -112,63 +113,76 @@ var marvel = {
     quotes: ["I am Iron Man", , "Hulk like raging fire", "Your friendly neighbourhood Spiderman"]
 };
 
+// DISPLAY AND RANDOMISE PHRASES
+// get chosen phrase from function
+// find character length of phrase
+// display the character length as underline characters
+var addPhrase = document.getElementById('addPhrase');
+var storedWords;
 // create a function that select's and array based on difficulty selected
 function selectPhrases(mode) {
+    // if easy is selected run statement
     if (mode === "easy") {
         console.log("Easy mode uses character phrases");
-        console.log(marvel.characters[Math.floor(Math.random() * marvel.characters.length)]);
+        // store data create a h2 element
+        var addElement = document.createElement("h2");
+        // generate and store marvel.characters array + randomly generate
+        storedWords = marvel.characters[Math.floor(Math.random() * marvel.characters.length)];
+        // append element to add h2
+        addPhrase.appendChild(addElement);
+        // place text + add class for styling
+        addElement.innerHTML = storedWords;
+        addElement.classList.add("gameWords");
     } else if (mode === "medium") {
         console.log("Medium mode uses movie titles");
     } else if (mode === "hard") {
         console.log("Hard mode uses quotes");
     }
 }
-// check to see if var of game mode is true, to choose 
-
-// add math.floor(math.random * length of array) to calculate random choice of array
-
-
-
-// DISPLAY AND RANDOMISE PHRASES
-// get chosen phrase from function
-// change phrase into lowercase letters
-// find character length of phrase
-// display the character length as underline characters
 
 // CLICK LETTERS AND DISPLAY LETTERS
+// add array for keyboard
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
     'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
     't', 'u', 'v', 'w', 'x', 'y', 'z'
 ];
-var drinkList = [
-    "Coffee: $5",
-    "Espresso: $7",
-    "Cappuccino: $6",
-    "Latte: $4",
-    "Tea: $3",
-    "Ice Coffee: $6",
-    "Ice Espresso: $8",
-    "Ice Latte: $6",
-    "Ice Tea: $4"
-];
-
+// declare var getting element
 var keyboardBtns = document.getElementById('keyboard');
-
-keyboardDisplay();
-
-function keyboardDisplay() {
-    for (var i = 0; i < alphabet.length; i++) {
-        var newBtn = document.createElement("button");
-        keyboardBtns.appendChild(newBtn);
-        newBtn.textContent = alphabet[i];
-        newBtn.classList.add("keyboardBtn");
+var storeBtnString;
+// call function to display keyboard
+keyboardDisplay("ready");
+// create for loop to place each letter as a button
+function keyboardDisplay(state, ) {
+    if (state === "ready") {
+        for (var i = 0; i < alphabet.length; i++) {
+            var newBtn = document.createElement("button");
+            keyboardBtns.appendChild(newBtn);
+            newBtn.textContent = alphabet[i];
+            newBtn.classList.add("keyboardBtn");
+        }
     }
 }
+// call a function to determine selected button
+
+letterSelect();
+var keyBtns = document.getElementsByClassName('keyboardBtn');
+
+function letterSelect() {
+
+    keyBtns.addEventListener("click", usedLetter);
+    // to check clicked letter
+    function usedLetter() {
+        // add remove active styling to buttons
+        console.log(storedWords);
+        console.log(store + "3");
+    }
 
 
+}
 
 // allow users to select letters to complete word
 // listen to keyup letters from user
+
 
 // SHOW CORRECT AND WRONG LETTERS
 // check user inputs
