@@ -48,6 +48,7 @@ function setAutoDifficulty(auto) {
         console.log("Your mode is set to easy");
         console.log("Both medium and hard modes are false");
         selectPhrases("easy");
+
     } else {
         // if statement is false tell console
         console.log("no auto difficulty set");
@@ -98,6 +99,7 @@ function changeDifficulty() {
         console.log("hard button clicked");
         // call a function in the phrases
         selectPhrases("hard");
+
     }
 };
 
@@ -123,18 +125,20 @@ var storedWords;
 function selectPhrases(mode) {
     // if easy is selected run statement
     if (mode === "easy") {
-        console.log("Easy mode uses character phrases");
-        // store data create a h2 element
+        // create a h2 element
         var addElement = document.createElement("h2");
         // generate and store marvel.characters array + randomly generate
         storedWords = marvel.characters[Math.floor(Math.random() * marvel.characters.length)];
         // append element to add h2
         addPhrase.appendChild(addElement);
         // place text + add class for styling
-        addElement.innerHTML = storedWords;
+
+        underline = storedWords.replace(/_/g, "_");
         addElement.classList.add("gameWords");
+        addElement.innerHTML = underline;
+        console.log("Easy mode uses character phrases");
     } else if (mode === "medium") {
-        console.log("Medium mode uses movie titles");
+        console.log("Medium mode uses movies");
     } else if (mode === "hard") {
         console.log("Hard mode uses quotes");
     }
@@ -146,13 +150,14 @@ var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
     'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
     't', 'u', 'v', 'w', 'x', 'y', 'z'
 ];
-// declare var getting element
 var keyboardBtns = document.getElementById('keyboard');
-var storeBtnString;
+var letterBox = document.getElementById('letterBox');
+var selectedLetter = [" "];
+
 // call function to display keyboard
 keyboardDisplay("ready");
-// create for loop to place each letter as a button
-function keyboardDisplay(state, ) {
+// create for loop to place each letter as a button keyboard
+function keyboardDisplay(state) {
     if (state === "ready") {
         for (var i = 0; i < alphabet.length; i++) {
             var newBtn = document.createElement("button");
@@ -160,48 +165,79 @@ function keyboardDisplay(state, ) {
             newBtn.textContent = alphabet[i];
             newBtn.classList.add("keyboardBtn");
         }
-    }
+    };
+};
+
+// run a function that deletes a letters
+function minusLetter() {
+    letter = removeLetter;
+    letter.classList.add("d-none");
 }
+// var lives
+var lives = 0;
 // call a function to determine selected button
+keyboardBtns.addEventListener("click", usedLetter);
+// to check clicked letter
+function usedLetter(e) {
+    // set a variable inner html to find the value
+    selectedLetter = e.target.innerHTML;
+    removeLetter = e.target;
 
-letterSelect();
-var keyBtns = document.getElementsByClassName('keyboardBtn');
+    // create an if statement
+    // it will give the position of the letter in the string
+    if (storedWords.toLowerCase().includes(selectedLetter)) {
+        // call a function that adds letter in to word box
+        var usedBtn = document.createElement("button");
+        letterBox.appendChild(usedBtn);
+        usedBtn.textContent = selectedLetter;
+        usedBtn.classList.add("keyUsedBtn", "keyCorrect");
+        // minus letter after click
+        minusLetter();
+        console.log('correct character');
+    } else {
+        var usedBtn = document.createElement("button");
+        letterBox.appendChild(usedBtn);
+        usedBtn.textContent = selectedLetter;
+        usedBtn.classList.add("keyUsedBtn", "keyIncorrect");
+        // minus letter after click
+        minusLetter();
+        console.log('wrong character');
+        // function minus life 
+        // LIVES IN GAME
+        // little iron man heads will be your lives counter
+        // check the amount of red letters (loop)
+        // for red letters in input box, -1 life for each letter, for a total of 8 lives
+        switch (lives) {
+            case 1:
+                lives++;
+                life = document.getElementById("life-5");
+                life.classList.add("d-none");
+            case 2:
+                lives++;
+                life = document.getElementById("life-4");
+                life.classList.add("d-none");
+            default:
+                life = document.getElementById("life-3");
+                life.classList.add("d-none");
+                lives++;
+        }
 
-function letterSelect() {
-
-    keyBtns.addEventListener("click", usedLetter);
-    // to check clicked letter
-    function usedLetter() {
-        // add remove active styling to buttons
-        console.log(storedWords);
-        console.log(store + "3");
+        /*
+			if (lives < 1) {
+                life = document.getElementById("life-5");
+                life.classList.add("d-none");
+                lives = 1;
+                console.log(lives + " one");
+            } else if (lives < 2) {
+                life = document.getElementById("life-5");
+                life.classList.add("d-none");
+                lives = 2;
+                console.log(lives + " two");
+			}
+			*/
     }
-
-
 }
 
-// allow users to select letters to complete word
-// listen to keyup letters from user
-
-
-// SHOW CORRECT AND WRONG LETTERS
-// check user inputs
-// letters selected show below in a box
-// if letters are correct, push letter to box and change color to green
-// if letters are incoorect, place letters to box and change color to red
-// else don't add anything
-
-// LIVES IN GAME
-// little iron man heads will be your lives counter
-// check the amount of red letters (loop)
-// for red letters in input box, -1 life for each letter, for a total of 8 lives
-
-// UPDATE HANGMAN IMAGE
-// custom image with 8 frames, that changes in relation to incorrect answers
-// check amount correct and incorrect letters within the input box,
-// correct = green, incorrect = red
-// if incorrect guesses +1 frame, once 8 frames are reached user loses game
-// if correct don't change image number +0
 
 // PARAMETERS OF WINS + LOSES
 // user has 8 chances to guess the correct phrase or they loose the game

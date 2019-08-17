@@ -44,11 +44,11 @@
                         <div class="row">
                             <div class="pt-2 mt-4 col-12 col-md-6">
                                 <h4>Lives</h4>
-                                <img src="assets/images/ironman-lives.png" class="img-lives">
-                                <img src="assets/images/ironman-lives.png" class="img-lives">
-                                <img src="assets/images/ironman-lives.png" class="img-lives">
-                                <img src="assets/images/ironman-lives.png" class="img-lives">
-                                <img src="assets/images/ironman-lives.png" class="img-lives">
+                                <img src="assets/images/ironman-lives.png" id="life-1" class="img-lives">
+                                <img src="assets/images/ironman-lives.png" id="life-2" class="img-lives">
+                                <img src="assets/images/ironman-lives.png" id="life-3" class="img-lives">
+                                <img src="assets/images/ironman-lives.png" id="life-4" class="img-lives">
+                                <img src="assets/images/ironman-lives.png" id="life-5" class="img-lives">
                             </div>
                             <div class="col-12 mt-4 col-md-6">
                                 <h4>Choose Difficulty</h4>
@@ -70,11 +70,26 @@
                             <!-- Keyboard -->
                             <div class="col-12 col-md-7 col-lg-6 border-right">
                                 <div id="keyboard" class="mt-4 mb-4"></div>
-                                <div id="drink-options"></div>
                             </div>
                             <!-- Letter Box -->
                             <div class="col-12 col-md-5 col-lg-6">
-                                <h4>letters selected</h4>
+                                <div class="col-12" style="height: 125px;">
+                                    <h4>letters selected</h4>
+                                    <div id="letterBox"></div>
+                                </div>
+                                <aside class="col-12" style="height: 85px;">
+                                    <h4>Your Score</h4>
+                                    <div class="row">
+
+                                        <div class="col-6">
+                                            <h4 id="winCount">Wins:</h4>
+                                        </div>
+                                        <div class="col-6">
+                                            <h4 id="lostCount">Losses:</h4>
+                                        </div>
+                                    </div>
+                                </aside>
+
                             </div>
                         </div>
                     </div>

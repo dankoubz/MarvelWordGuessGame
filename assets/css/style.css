@@ -68,6 +68,10 @@ div #wordBox {
     left: 0;
 }
 
+aside {
+    bottom: 0;
+}
+
 
 /* Lives */
 
@@ -97,6 +101,30 @@ div #wordBox {
 
 .border-right {
     border-right: 3px solid #4D4D4D !important;
+}
+
+.keyUsedBtn {
+    padding: 6px 10px;
+    background: #1a1a1a;
+    border: white 1px solid;
+    font-family: Marvel;
+    text-transform: uppercase;
+    font-size: .8em;
+    color: white;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.keyCorrect {
+    border: #00ff9d 2px solid !important;
+    color: #00ff9d;
+    margin-left: 5px;
+}
+
+.keyIncorrect {
+    border: #ed1d24 2px solid !important;
+    color: #ed1d24;
+    margin-left: 5px;
 }
 
 
