@@ -1,252 +1,325 @@
-// Marvel Hangman Game
-// Theme: Marvel Superheores Cinematic
+// wait for document to be opened
+window.onload = function() {
 
-// Rules + Steps
+    // Marvel Hangman Game
+    // Theme: Marvel Superheores Cinematic
 
-// START GAME
-// declare variables
-var gameSession = false;
-var mainGame = 0;
-console.log("Game Session is " + gameSession);
+    // Marvel themed object array
+    var marvel = {
+        characters: ["thor", "iron man", "hulk"],
+        movies: ["Iron Man", "Avengers Age of Ultron", "Guardians of the Galaxy"],
+        quotes: ["I am Iron Man", "Hulk like raging fire", "Your friendly neighbourhood Spiderman"]
+    };
+    // var for keyboard
+    var alphabet = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i',
+        'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+        'z', 'x', 'c', 'v', 'b', 'n', 'm'
+    ];
 
-// call on start + parameter to only call once
-onStart(mainGame === 0);
+    // Declare all variables for the page
+    var gameMode = "true"; // Game is active on key up
+    var categories; // Array of Marvel topics
+    var chosenCategory = marvel.characters; // Selected catagory
+    var word; // Selected word
+    var guess; // Guess
+    var guesses = []; // Stored guesses
+    var lives; // Lives
+    var counter; // Count correct guesses
+    var space; // Number of spaces in word '-'
+    var wins = 0; // win count
+    var loss = 0; // loss count
 
-// start game, "press any key to get started"
-function onStart() {
+    // Get elements from the page
+    var showLives = document.getElementById("mylives");
+    var showCatagory = document.getElementById("scatagory");
+
+    // Key up on start 
     document.onkeyup = function startGame() {
-        if (mainGame < 1) {
+        if (gameMode === "true") {
             // set display to none, remove welcome screen
             document.getElementById("welcome").style.display = "none";
             // add display block for main game content
             document.getElementById("main-game").style.display = "block";
-            // make gameSession varaible true as a session has started 
-            gameSession = true;
             // console function status
-            console.log("Game Session is " + gameSession);
-            // set mainGame to 1, so function doesn't run again
-            mainGame = 1;
-            // call function
-            setAutoDifficulty("autoEasy");
-            // condition if key up has been used	
-        } else if (mainGame === 1) {
+            console.log("gameMode is on");
+            gameMode = "false";
+        } else if (gameMode === "false") {
             console.log("your game is already loaded");
         }
     }
-};
 
-// LEVEL OF DIFFICULTY
-// delcare variables of modes
-// run this function to set auto game mode
-function setAutoDifficulty(auto) {
-    // Making sure condition is true
-    if (auto === "autoEasy") {
-        // find easy id for button
-        var activeMode = document.getElementById("easy");
-        // set class of buttin to active, css stylinh
-        activeMode.classList.add("active");
-        console.log("Your mode is set to easy");
-        console.log("Both medium and hard modes are false");
-        selectPhrases("easy");
+    // Generate an alphabet keyboard
+    var keyboard = function() {
+        // get keyboard div with id
+        keyboardBox = document.getElementById('keyboard');
+        // create letters as list item
+        letters = document.createElement('div');
 
-    } else {
-        // if statement is false tell console
-        console.log("no auto difficulty set");
-    }
-};
-
-// make buttons that once selected changes the dificulty
-// Easy = characters, medium = movies + hard = quotes
-function changeDifficulty() {
-    // set var to id of button in html
-    var easyButton = document.getElementById('easy');
-    var mediumButton = document.getElementById('medium');
-    var hardButton = document.getElementById('hard');
-
-    // add listener to variables so button click triiger id
-    easyButton.addEventListener("click", changeToEasy);
-    mediumButton.addEventListener("click", changeToMedium);
-    hardButton.addEventListener("click", changeToHard);
-
-    // function to change to easy level
-    function changeToEasy() {
-        // add remove active styling to buttons
-        easyButton.classList.add("active");
-        mediumButton.classList.remove("active");
-        hardButton.classList.remove("active");
-        console.log("easy button clicked");
-        // call a function in the phrases
-        selectPhrases("easy");
-    }
-
-    // function to change to medium level
-    function changeToMedium() {
-        // add remove active styling to buttons
-        easyButton.classList.remove("active");
-        mediumButton.classList.add("active");
-        hardButton.classList.remove("active");
-        console.log("medium button clicked");
-        // call a function in the phrases
-        selectPhrases("medium");
-    }
-
-    // call function to change to hard level
-    function changeToHard() {
-        // add remove active styling to buttons
-        easyButton.classList.remove("active");
-        mediumButton.classList.remove("active");
-        hardButton.classList.add("active");
-        console.log("hard button clicked");
-        // call a function in the phrases
-        selectPhrases("hard");
-
-    }
-};
-
-// call function to allow button to change difficulty
-changeDifficulty();
-
-// WORD PHRASES OBJECT + ARRAY
-// create an object called Marvel
-// within object create properties charactsers, quotes and movie titles.
-var marvel = {
-    characters: ["Thor", "Iron Man", "Hulk"],
-    movies: ["Iron Man", "Avengers Age of Ultron", "Guardians of the Galaxy"],
-    quotes: ["I am Iron Man", , "Hulk like raging fire", "Your friendly neighbourhood Spiderman"]
-};
-
-// DISPLAY AND RANDOMISE PHRASES
-// get chosen phrase from function
-// find character length of phrase
-// display the character length as underline characters
-var addPhrase = document.getElementById('addPhrase');
-var storedWords;
-// create a function that select's and array based on difficulty selected
-function selectPhrases(mode) {
-    // if easy is selected run statement
-    if (mode === "easy") {
-        // create a h2 element
-        var addElement = document.createElement("h2");
-        // generate and store marvel.characters array + randomly generate
-        storedWords = marvel.characters[Math.floor(Math.random() * marvel.characters.length)];
-        // append element to add h2
-        addPhrase.appendChild(addElement);
-        // place text + add class for styling
-
-        underline = storedWords.replace(/_/g, "_");
-        addElement.classList.add("gameWords");
-        addElement.innerHTML = underline;
-        console.log("Easy mode uses character phrases");
-    } else if (mode === "medium") {
-        console.log("Medium mode uses movies");
-    } else if (mode === "hard") {
-        console.log("Hard mode uses quotes");
-    }
-}
-
-// CLICK LETTERS AND DISPLAY LETTERS
-// add array for keyboard
-var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
-    'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-    't', 'u', 'v', 'w', 'x', 'y', 'z'
-];
-var keyboardBtns = document.getElementById('keyboard');
-var letterBox = document.getElementById('letterBox');
-var selectedLetter = [" "];
-
-// call function to display keyboard
-keyboardDisplay("ready");
-// create for loop to place each letter as a button keyboard
-function keyboardDisplay(state) {
-    if (state === "ready") {
+        // run a for loop to generate letters
         for (var i = 0; i < alphabet.length; i++) {
-            var newBtn = document.createElement("button");
-            keyboardBtns.appendChild(newBtn);
-            newBtn.textContent = alphabet[i];
-            newBtn.classList.add("keyboardBtn");
+            // create ul element and add id alphabet
+            letters.id = 'alphabet';
+            // create element li
+            keys = document.createElement('button');
+            // set letters class and styling class
+            keys.classList.add("letter", "keyboardBtn");
+            // insert html of array alphabet
+            keys.innerHTML = alphabet[i];
+            // run function
+            checkOnClick();
+            // get buttons div and letters ul
+            keyboardBox.appendChild(letters);
+            // also add li alphabet inside of ul
+            letters.appendChild(keys);
         }
-    };
-};
-
-// run a function that deletes a letters
-function minusLetter() {
-    letter = removeLetter;
-    letter.classList.add("d-none");
-}
-// var lives
-var lives = 0;
-// call a function to determine selected button
-keyboardBtns.addEventListener("click", usedLetter);
-// to check clicked letter
-function usedLetter(e) {
-    // set a variable inner html to find the value
-    selectedLetter = e.target.innerHTML;
-    removeLetter = e.target;
-
-    // create an if statement
-    // it will give the position of the letter in the string
-    if (storedWords.toLowerCase().includes(selectedLetter)) {
-        // call a function that adds letter in to word box
-        var usedBtn = document.createElement("button");
-        letterBox.appendChild(usedBtn);
-        usedBtn.textContent = selectedLetter;
-        usedBtn.classList.add("keyUsedBtn", "keyCorrect");
-        // minus letter after click
-        minusLetter();
-        console.log('correct character');
-    } else {
-        var usedBtn = document.createElement("button");
-        letterBox.appendChild(usedBtn);
-        usedBtn.textContent = selectedLetter;
-        usedBtn.classList.add("keyUsedBtn", "keyIncorrect");
-        // minus letter after click
-        minusLetter();
-        console.log('wrong character');
-        // function minus life 
-        // LIVES IN GAME
-        // little iron man heads will be your lives counter
-        // check the amount of red letters (loop)
-        // for red letters in input box, -1 life for each letter, for a total of 8 lives
-        switch (lives) {
-            case 1:
-                lives++;
-                life = document.getElementById("life-5");
-                life.classList.add("d-none");
-            case 2:
-                lives++;
-                life = document.getElementById("life-4");
-                life.classList.add("d-none");
-            default:
-                life = document.getElementById("life-3");
-                life.classList.add("d-none");
-                lives++;
-        }
-
-        /*
-			if (lives < 1) {
-                life = document.getElementById("life-5");
-                life.classList.add("d-none");
-                lives = 1;
-                console.log(lives + " one");
-            } else if (lives < 2) {
-                life = document.getElementById("life-5");
-                life.classList.add("d-none");
-                lives = 2;
-                console.log(lives + " two");
-			}
-			*/
     }
+
+    // On Click function
+    checkOnClick = function() {
+
+        // get list.onclick run function
+        keys.onclick = function() {
+            // access elements HTML and store as a var
+            var guess = (this.innerHTML);
+            console.log("fired on click - " + guess);
+            // set atributes class and disabled
+            this.classList.add("disabled");
+            // nothing happened here - walk away
+
+            // run a for loop based on the length of the word
+            for (var i = 0; i < word.length; i++) {
+                // if word index === guess then run
+                if (word[i] === guess) {
+                    // guesses array with index access inner html set to guess
+                    guesses[i].innerHTML = guess;
+                    // add +1 to the count
+                    counter += 1;
+                }
+            }
+
+            // set var j and assign to word index of guess
+            var j = (word.indexOf(guess));
+            // set an if statement		
+            if (j === -1) {
+                // minus life
+                lives -= 1;
+                // run functions - minus
+                stateOfGame();
+            } else {
+                // run function - comments
+                stateOfGame();
+            }
+        }
+    }
+
+    // Dificulty Select On Click
+    modeOnClick = function() {
+        // find buttons by id
+        btnEasy = document.getElementById("easy");
+        btnMedium = document.getElementById("medium");
+        btnHard = document.getElementById("hard");
+
+        // get easy button .onclick run function
+        btnEasy.onclick = function() {
+            // upade choice variable
+            chosenCategory = marvel.characters;
+            // make button active user feedback
+            btnEasy.classList.add("active");
+            btnMedium.classList.remove("active");
+            btnHard.classList.remove("active");
+            // call function to select category
+            selectWord("easy");
+        }
+
+        // get medium button .onclick run function
+        btnMedium.onclick = function() {
+            // upade choice variable
+            chosenCategory = marvel.movies;
+            // make button active user feedback
+            btnMedium.classList.add("active");
+            btnEasy.classList.remove("active");
+            btnHard.classList.remove("active");
+            // call function to select category
+            selectWord("medium");
+        }
+
+        // get hard button .onclick run function
+        btnHard.onclick = function() {
+            // upade choice variable
+            chosenCategory = marvel.quotes;
+            // make button active user feedback
+            btnHard.classList.add("active");
+            btnEasy.classList.remove("active");
+            btnMedium.classList.remove("active");
+            // call function to select category
+            selectWord("hard");
+        }
+    }
+
+    // Display Words + Change to characters
+    displayWords = function() {
+        // get hold element
+        placeWord = document.getElementById("addPhrase");
+        // create to replace words
+        correct = document.createElement('div');
+
+        // run for loop of lenghth of words
+        for (var i = 0; i < word.length; i++) {
+            // set an id to the correct guesses
+            correct.setAttribute('id', 'my-word');
+            // guess creates li
+            guess = document.createElement('h2');
+            // set class to guess
+            guess.classList.add("guess", "specialChar");
+
+            // if statmeent to identify charcters
+            if (word[i] === "-") {
+                guess.innerHTML = "  ";
+                space = 1;
+            } else {
+                guess.innerHTML = "_"; // replace with lines
+            }
+
+            // push guess to guesses variable
+            guesses.push(guess);
+            // append the correct values
+            placeWord.appendChild(correct);
+            // append with the guess
+            correct.appendChild(guess);
+        }
+    }
+
+    // Show lives
+    stateOfGame = function() {
+        // display current lives
+        showLives.innerHTML = "You have " + lives + " lives";
+        // for 4 lives
+        if (lives === 4) {
+            removeLife = document.getElementById("life-5");
+            removeLife.classList.add("d-none");
+        }
+        // for 3 lives
+        if (lives === 3) {
+            removeLife = document.getElementById("life-4");
+            removeLife.classList.add("d-none");
+        }
+        // for 2 lives
+        if (lives === 2) {
+            removeLife = document.getElementById("life-3");
+            removeLife.classList.add("d-none");
+        }
+        // for 2 lives
+        if (lives === 1) {
+            removeLife = document.getElementById("life-2");
+            removeLife.classList.add("d-none");
+        }
+        // if lives number falls under 1 = loss
+        else if (lives < 1) {
+            showLives.innerHTML = "<h2>Game Over</h2>";
+            removeLife = document.getElementById("life-1");
+            removeLife.classList.add("d-none");
+
+            // call function and track loss
+            function lossGame() {
+                gameScore("-1");
+            }
+            lossGame();
+        }
+        for (var i = 0; i < guesses.length; i++) {
+            if (counter + space === guesses.length) {
+                showLives.innerHTML = "You Win!";
+
+                // call function to add win!
+                function wonGame() {
+                    gameScore("+1");
+                }
+                wonGame();
+            }
+        }
+    }
+
+    // Play game function
+    play = function() { // main place to store game information
+
+        // Auto Select Easy Mode
+        function autoEasy(auto) {
+            if (auto === "easy") {
+                // make button active user feedback
+                btnEasy.classList.add("active");
+                selectWord("easy");
+                // run a function to display words
+                displayWords();
+            }
+        }
+
+        // check game score
+        gameScore = function(value) {
+            // for wins
+            winsDisplay = document.getElementById("winCount");
+            winsDisplay.innerHTML = "Wins: " + wins;
+
+            // for losses
+            lossDisplay = document.getElementById("lossCount");
+            lossDisplay.innerHTML = "Losses: " + loss;
+
+            if (value === "+1") {
+                wins = +1;
+                winsDisplay.innerHTML = "Wins: " + wins;
+            } else if (value === "-1") {
+                loss = +1;
+                lossDisplay.innerHTML = "Losses: " + loss;
+            }
+        }
+
+        // Select Word and generate
+        selectWord = function(check) {
+            if (check === "easy") {
+                word = chosenCategory[Math.floor(Math.random() * marvel.characters.length)];
+                word = word.replace(/\s/g, "-");
+                console.log(word + " - Easy");
+            } else if (check === "medium") {
+                word = chosenCategory[Math.floor(Math.random() * marvel.characters.length)];
+                word = word.replace(/\s/g, "-");
+                console.log(word + " - Medium");
+            } else if (check === "hard") {
+                word = chosenCategory[Math.floor(Math.random() * marvel.characters.length)];
+                word = word.replace(/\s/g, "-");
+                console.log(word + " - Hard");
+            }
+        }
+
+        // stored guesses
+        guesses = [];
+        // amount of lives set
+        lives = 5;
+        // how many letters selected
+        counter = 0;
+        // spaces in the phrase
+        space = 0;
+
+        // call functions
+        // game score
+        gameScore();
+        // run function for keyboard
+        keyboard();
+        // run function for mode
+        modeOnClick();
+        // set auto level
+        autoEasy("easy");
+        // check state of game
+        stateOfGame("auto");
+    }
+    play();
+
+    // reset
+    document.getElementById('reset').onclick = function() {
+        correct.parentNode.removeChild(correct);
+        letters.parentNode.removeChild(letters);
+        context.clearRect(0, 0, 400, 400);
+
+        gameMode = "true";
+        startGame();
+        play();
+    }
+
 }
-
-
-// PARAMETERS OF WINS + LOSES
-// user has 8 chances to guess the correct phrase or they loose the game
-// if user guesses correctly play Marvel theme song 
-// check for all display characters are all filled if so, user wins!
-// else user guesses incorrectly Iron Man death scene will play - this can be a gif
-// check for 8 incorrect guesses, user loses game!
-
-// BOUNS GAME ENTERTAINMENT + FUNCTIONS
-// keep a tally of lives displayed as Iron Man heads
-// keep score of wins and losses
-// shown in the a display box

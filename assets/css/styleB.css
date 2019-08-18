@@ -27,7 +27,6 @@ h1 {
 h2 {
     font-size: 3em;
     line-height: 1.1em;
-    letter-spacing: 0.1em;
     font-family: Marvel;
     text-transform: uppercase;
 }
@@ -42,8 +41,7 @@ h3 {
 h4 {
     font-size: 1.5em;
     line-height: 1.3em;
-    font-family: Marvel, Helvetica, sans-serif;
-    font-weight: bolder;
+    font-family: Marvel;
     text-transform: uppercase;
 }
 
@@ -71,37 +69,7 @@ div #wordBox {
 }
 
 aside {
-    position: relative;
     bottom: 0;
-}
-
-
-/* Display Letters */
-
-.specialChar {
-    font-size: 8em;
-    line-height: 1.1em;
-    font-family: Marvel;
-    text-transform: uppercase;
-    display: inline-block;
-    padding-right: 15px;
-    color: #ed1d24;
-}
-
-.wins {
-    background: #00ff9d !important;
-    border-radius: 10px;
-    color: white;
-    padding: 10px 0;
-    margin: 10px 0;
-}
-
-.loss {
-    background: #ed1d24 !important;
-    border-radius: 10px;
-    color: white;
-    padding: 10px 0;
-    margin: 10px 0;
 }
 
 
@@ -115,7 +83,7 @@ aside {
 /* Letters */
 
 .keyboardBtn {
-    padding: 12.5px 20px;
+    padding: 10px 20px;
     background: #1a1a1a;
     border: white 1px solid;
     font-family: Marvel;
@@ -159,11 +127,6 @@ aside {
     margin-left: 5px;
 }
 
-.disabled {
-    border: #4D4D4D 1px solid;
-    color: #4D4D4D;
-}
-
 
 /* Animation */
 
@@ -202,43 +165,24 @@ aside {
 
 /* Buttons */
 
-.btn {
-    font-size: 1.8em;
-    line-height: 1.3em;
-    font-family: Marvel;
-    text-transform: uppercase;
-    margin: 0;
-    padding: 10px 20px 7.5px 20px;
-}
-
 .btn-secondary {
     background: #1a1a1a !important;
-    border: white 2px solid !important;
+    border: white 1px solid !important;
 }
 
 .btn-secondary:hover {
     background: #333333 !important;
-    border: white solid 2px !important;
+    border: white solid 1px !important;
 }
 
 .active {
     background: #ed1d24 !important;
-    border: #ed1d24 solid 2px !important;
+    border: #ed1d24 solid 1px !important;
 }
 
 .active:hover {
     background: #ba161c !important;
-    border: #ba161c 2px solid !important;
-}
-
-.again {
-    font-size: 1.8em;
-    line-height: 1.3em;
-    font-family: Marvel;
-    text-transform: uppercase;
-    margin: 0;
-    padding: 10px 20px 7.5px 20px;
-    border-radius: 5px;
+    border: #ba161c 1px solid !important;
 }
 
 
