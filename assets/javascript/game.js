@@ -19,6 +19,7 @@ window.onload = function() {
     // Declare all variables for the page
     var gameMode = "true"; // Game is active on key up
     var categories; // Array of Marvel topics
+    var chosenLevel;
     var chosenCategory = marvel.characters; // Selected catagory
     var word; // Selected word
     var guess; // Guess
@@ -42,12 +43,8 @@ window.onload = function() {
             document.getElementById("main-game").style.display = "block";
             // console function status
             console.log("gameMode is on");
+            // set false values
             gameMode = "false";
-
-            // Clear any existing content - Keyboards, etc.
-
-            // Create any new content we need - Keyboards, etc.
-
         } else if (gameMode === "false") {
             console.log("your game is already loaded");
         }
@@ -316,9 +313,6 @@ window.onload = function() {
     // reset
     document.getElementById('reset').onclick = function() {
 
-        lives = 5;
-
-        gameMode = "true";
         initaliseRound();
     }
 

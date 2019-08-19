@@ -79,17 +79,18 @@ aside {
 /* Display Letters */
 
 .specialChar {
-    font-size: 8em;
+    font-size: 6em;
     line-height: 1.1em;
     font-family: Marvel;
     text-transform: uppercase;
     display: inline-block;
-    padding-right: 15px;
-    color: #ed1d24;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
 }
 
 .wins {
-    background: #00ff9d !important;
+    color: #00ff9d !important;
     border-radius: 10px;
     color: white;
     padding: 10px 0;
@@ -97,7 +98,7 @@ aside {
 }
 
 .loss {
-    background: #ed1d24 !important;
+    color: #ed1d24 !important;
     border-radius: 10px;
     color: white;
     padding: 10px 0;
@@ -200,6 +201,10 @@ aside {
     font-size: 2.5em;
 }
 
+#mobile-dp {
+    height: 300px;
+}
+
 
 /* Buttons */
 
@@ -253,14 +258,31 @@ aside {
         height: 100vh;
         border: none;
     }
+    .specialChar {
+        text-align: center;
+        font-size: 2.5em;
+        padding: 5px 10px;
+    }
     .img-lives {
         width: 25px;
     }
     .keyboardBtn {
-        font-size: 1em;
-        padding: 8px 12.5px;
+        font-size: 1.3em;
+        padding: 10px 15px;
     }
     .border-right {
         border-right: none !important;
+    }
+    .btn {
+        font-size: 1.3em;
+        line-height: 1em;
+    }
+    .again {
+        font-size: 1.3em;
+        line-height: 1em;
+    }
+    #mobile-dp {
+        background: black;
+        height: 200px;
     }
 }
