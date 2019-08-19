@@ -215,6 +215,9 @@ window.onload = function() {
             case 4:
                 document.getElementById("life-5").classList.add("d-none");
                 break;
+            case 5:
+                console.info("Full Lives");
+                break;
             default:
                 console.warn("Unexpected Life Tally - " + lives);
         }
@@ -224,47 +227,17 @@ window.onload = function() {
             showLives.innerHTML = "You have " + lives + " lives";
         } else {
             showLives.innerHTML = "<h2>Game Over</h2>";
+            gameScore("-1");
         }
 
-        // if (lives === 4) {
-        //     removeLife = document.getElementById("life-5");
-        //     removeLife.classList.add("d-none");
-        // }
-        // // for 3 lives
-        // if (lives === 3) {
-        //     removeLife = document.getElementById("life-4");
-        //     removeLife.classList.add("d-none");
-        // }
-        // // for 2 lives
-        // if (lives === 2) {
-        //     removeLife = document.getElementById("life-3");
-        //     removeLife.classList.add("d-none");
-        // }
-        // // for 2 lives
-        // if (lives === 1) {
-        //     removeLife = document.getElementById("life-2");
-        //     removeLife.classList.add("d-none");
-        // }
-        // if lives number falls under 1 = loss
-        // else if (lives < 1) {
-        //     showLives.innerHTML = "<h2>Game Over</h2>";
-        //     removeLife = document.getElementById("life-1");
-        //     removeLife.classList.add("d-none");
+        //for (var i = 0; i < guesses.length; i++) {
+        if (counter + space === guesses.length) {
+            showLives.innerHTML = "You Win!";
 
-        //     // call function and track loss
-        //     function lossGame() {
-        //         gameScore("-1");
-        //     }
-        //     lossGame();
-        // }
-        for (var i = 0; i < guesses.length; i++) {
-            if (counter + space === guesses.length) {
-                showLives.innerHTML = "You Win!";
-
-                // call function to add win!
-                gameScore("+1");
-            }
+            // call function to add win!
+            gameScore("+1");
         }
+        //}
     }
 
     // Play game function
@@ -283,6 +256,13 @@ window.onload = function() {
 
         // check game score
         gameScore = function(value) {
+
+            if (value === "+1") {
+                wins += 1;
+            } else if (value === "-1") {
+                loss += 1;
+            }
+
             // for wins
             winsDisplay = document.getElementById("winCount");
             winsDisplay.innerHTML = "Wins: " + wins;
@@ -291,13 +271,6 @@ window.onload = function() {
             lossDisplay = document.getElementById("lossCount");
             lossDisplay.innerHTML = "Losses: " + loss;
 
-            if (value === "+1") {
-                wins = +1;
-                winsDisplay.innerHTML = "Wins: " + wins;
-            } else if (value === "-1") {
-                loss = +1;
-                lossDisplay.innerHTML = "Losses: " + loss;
-            }
         }
 
         // Select Word and generate
@@ -342,14 +315,11 @@ window.onload = function() {
 
     // reset
     document.getElementById('reset').onclick = function() {
-        correct.parentNode.removeChild(correct);
-        letters.parentNode.removeChild(letters);
-        context.clearRect(0, 0, 400, 400);
 
         lives = 5;
+
         gameMode = "true";
-        startGame();
-        play();
+        initaliseRound();
     }
 
 }
