@@ -43,6 +43,11 @@ window.onload = function() {
             // console function status
             console.log("gameMode is on");
             gameMode = "false";
+
+            // Clear any existing content - Keyboards, etc.
+
+            // Create any new content we need - Keyboards, etc.
+
         } else if (gameMode === "false") {
             console.log("your game is already loaded");
         }
@@ -52,13 +57,12 @@ window.onload = function() {
     var keyboard = function() {
         // get keyboard div with id
         keyboardBox = document.getElementById('keyboard');
+        // Empty the Keyboard DIV
         // create letters as list item
         letters = document.createElement('div');
 
         // run a for loop to generate letters
         for (var i = 0; i < alphabet.length; i++) {
-            // create ul element and add id alphabet
-            letters.id = 'alphabet';
             // create element li
             keys = document.createElement('button');
             // set letters class and styling class
@@ -79,12 +83,20 @@ window.onload = function() {
 
         // get list.onclick run function
         keys.onclick = function() {
+            // Can't guess if no lives left
+            if (lives <= 0) {
+                console.log('Dead player');
+                return;
+            }
+
             // access elements HTML and store as a var
             var guess = (this.innerHTML);
             console.log("fired on click - " + guess);
             // set atributes class and disabled
-            this.classList.add("disabled");
+            this.setAttribute("disabled", "disabled");
             // nothing happened here - walk away
+
+            var guessedLetterFound = false;
 
             // run a for loop based on the length of the word
             for (var i = 0; i < word.length; i++) {
@@ -94,21 +106,19 @@ window.onload = function() {
                     guesses[i].innerHTML = guess;
                     // add +1 to the count
                     counter += 1;
+                    // We got one
+                    guessedLetterFound = true;
                 }
             }
 
-            // set var j and assign to word index of guess
-            var j = (word.indexOf(guess));
-            // set an if statement		
-            if (j === -1) {
+            // We didn't find the guessed letter
+            if (!guessedLetterFound) {
                 // minus life
                 lives -= 1;
-                // run functions - minus
-                stateOfGame();
-            } else {
-                // run function - comments
-                stateOfGame();
             }
+
+            // Update Lives, etc.
+            stateOfGame();
         }
     }
 
@@ -182,58 +192,77 @@ window.onload = function() {
 
             // push guess to guesses variable
             guesses.push(guess);
-            // append the correct values
-            placeWord.appendChild(correct);
             // append with the guess
             correct.appendChild(guess);
         }
+        placeWord.appendChild(correct);
     }
 
     // Show lives
     stateOfGame = function() {
         // display current lives
-        showLives.innerHTML = "You have " + lives + " lives";
-        // for 4 lives
-        if (lives === 4) {
-            removeLife = document.getElementById("life-5");
-            removeLife.classList.add("d-none");
-        }
-        // for 3 lives
-        if (lives === 3) {
-            removeLife = document.getElementById("life-4");
-            removeLife.classList.add("d-none");
-        }
-        // for 2 lives
-        if (lives === 2) {
-            removeLife = document.getElementById("life-3");
-            removeLife.classList.add("d-none");
-        }
-        // for 2 lives
-        if (lives === 1) {
-            removeLife = document.getElementById("life-2");
-            removeLife.classList.add("d-none");
-        }
-        // if lives number falls under 1 = loss
-        else if (lives < 1) {
-            showLives.innerHTML = "<h2>Game Over</h2>";
-            removeLife = document.getElementById("life-1");
-            removeLife.classList.add("d-none");
 
-            // call function and track loss
-            function lossGame() {
-                gameScore("-1");
-            }
-            lossGame();
+        // Hide life markers
+        switch (lives) {
+            case 0:
+                document.getElementById("life-1").classList.add("d-none");
+            case 1:
+                document.getElementById("life-2").classList.add("d-none");
+            case 2:
+                document.getElementById("life-3").classList.add("d-none");
+            case 3:
+                document.getElementById("life-4").classList.add("d-none");
+            case 4:
+                document.getElementById("life-5").classList.add("d-none");
+                break;
+            default:
+                console.warn("Unexpected Life Tally - " + lives);
         }
+
+        // Update Life Tally Text
+        if (lives) {
+            showLives.innerHTML = "You have " + lives + " lives";
+        } else {
+            showLives.innerHTML = "<h2>Game Over</h2>";
+        }
+
+        // if (lives === 4) {
+        //     removeLife = document.getElementById("life-5");
+        //     removeLife.classList.add("d-none");
+        // }
+        // // for 3 lives
+        // if (lives === 3) {
+        //     removeLife = document.getElementById("life-4");
+        //     removeLife.classList.add("d-none");
+        // }
+        // // for 2 lives
+        // if (lives === 2) {
+        //     removeLife = document.getElementById("life-3");
+        //     removeLife.classList.add("d-none");
+        // }
+        // // for 2 lives
+        // if (lives === 1) {
+        //     removeLife = document.getElementById("life-2");
+        //     removeLife.classList.add("d-none");
+        // }
+        // if lives number falls under 1 = loss
+        // else if (lives < 1) {
+        //     showLives.innerHTML = "<h2>Game Over</h2>";
+        //     removeLife = document.getElementById("life-1");
+        //     removeLife.classList.add("d-none");
+
+        //     // call function and track loss
+        //     function lossGame() {
+        //         gameScore("-1");
+        //     }
+        //     lossGame();
+        // }
         for (var i = 0; i < guesses.length; i++) {
             if (counter + space === guesses.length) {
                 showLives.innerHTML = "You Win!";
 
                 // call function to add win!
-                function wonGame() {
-                    gameScore("+1");
-                }
-                wonGame();
+                gameScore("+1");
             }
         }
     }
@@ -317,6 +346,7 @@ window.onload = function() {
         letters.parentNode.removeChild(letters);
         context.clearRect(0, 0, 400, 400);
 
+        lives = 5;
         gameMode = "true";
         startGame();
         play();

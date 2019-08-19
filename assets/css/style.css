@@ -159,7 +159,8 @@ aside {
     margin-left: 5px;
 }
 
-.disabled {
+.disabled,
+.keyboardBtn[disabled] {
     border: #4D4D4D 1px solid;
     color: #4D4D4D;
 }
