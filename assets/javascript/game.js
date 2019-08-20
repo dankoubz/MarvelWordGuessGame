@@ -34,6 +34,7 @@ window.onload = function() {
     var showLives = document.getElementById("mylives");
     var showCatagory = document.getElementById("scatagory");
     var clickBtnMobile = document.getElementById("mobileBtn");
+    var letterBox = document.getElementById("letterBox");
 
     // Key up on start 
     document.onkeyup = function startGame() {
@@ -96,6 +97,8 @@ window.onload = function() {
             // access elements HTML and store as a var
             var guess = (this.innerHTML);
             console.log("fired on click - " + guess);
+
+
             // set atributes class and disabled
             this.setAttribute("disabled", "disabled");
             // nothing happened here - walk away
@@ -112,6 +115,12 @@ window.onload = function() {
                     counter += 1;
                     // We got one
                     guessedLetterFound = true;
+
+                    // function to move letters
+                    usedBtn = document.createElement("button");
+                    letterBox.appendChild(usedBtn);
+                    usedBtn.textContent = guess;
+                    usedBtn.classList.add("keyUsedBtn", "keyCorrect");
                 }
             }
 
@@ -119,12 +128,17 @@ window.onload = function() {
             if (!guessedLetterFound) {
                 // minus life
                 lives -= 1;
+
+                // function to move letters
+
+                usedBtn = document.createElement("button");
+                letterBox.appendChild(usedBtn);
+                usedBtn.textContent = guess;
+                usedBtn.classList.add("keyUsedBtn", "keyIncorrect");
             }
 
             // Update Lives, etc.
             stateOfGame("onPlay");
-
-
         }
     }
 
@@ -170,6 +184,7 @@ window.onload = function() {
             // call function to select category
             selectWord("hard");
         }
+
     }
 
     // Display Words + Change to characters
@@ -206,27 +221,6 @@ window.onload = function() {
 
     // Show lives
     stateOfGame = function(status) {
-
-        // if (status === "refresh") {
-        //     switch (lives) {
-        //         case 5:
-        //             document.getElementById("life-1").classList.add("d-inline-block");
-        //             document.getElementById("life-2").classList.add("d-inline-block");
-        //             document.getElementById("life-3").classList.add("d-inline-block");
-        //             document.getElementById("life-4").classList.add("d-inline-block");
-        //             document.getElementById("life-5").classList.add("d-inline-block");
-        //             break;
-        //             console.info("Full Lives");
-        //             break;
-        //         default:
-        //             console.warn("Unexpected Life Tally - " + lives);
-        //     }
-        // }
-
-        // if (status === "onPlay") {
-        // Hide life markers
-
-        console.log(lives + " 666");
         switch (lives) {
             case 0:
                 document.getElementById("life-1").classList.add("d-none");
@@ -307,13 +301,15 @@ window.onload = function() {
             if (check === "easy") {
                 word = chosenCategory[Math.floor(Math.random() * marvel.characters.length)];
                 word = word.replace(/\s/g, "-");
+
                 console.log(word + " - Easy");
             } else if (check === "medium") {
-                word = chosenCategory[Math.floor(Math.random() * marvel.characters.length)];
+                word = chosenCategory[Math.floor(Math.random() * marvel.movies.length)];
                 word = word.replace(/\s/g, "-");
+                // call a function
                 console.log(word + " - Medium");
             } else if (check === "hard") {
-                word = chosenCategory[Math.floor(Math.random() * marvel.characters.length)];
+                word = chosenCategory[Math.floor(Math.random() * marvel.quotes.length)];
                 word = word.replace(/\s/g, "-");
                 console.log(word + " - Hard");
             }
@@ -349,9 +345,14 @@ window.onload = function() {
         correct.parentNode.removeChild(correct);
         letters.parentNode.removeChild(letters);
 
-        lives = 6
+        for (var i = 0; i < letterBox.childElementCount; i++) {
+            letterBox.removeChildren(usedBtn);
+        }
+
+        // reset lives images
+        lives = 0;
         switch (lives) {
-            case 6:
+            case 0:
                 document.getElementById("life-1").classList.add("d-inline-block");
                 document.getElementById("life-2").classList.add("d-inline-block");
                 document.getElementById("life-3").classList.add("d-inline-block");
@@ -364,7 +365,7 @@ window.onload = function() {
                 console.warn("Unexpected Life Tally - " + lives);
         }
 
-        // reset the images.
+        // reset by calling play function
         play();
     }
 
