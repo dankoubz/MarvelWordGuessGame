@@ -264,11 +264,11 @@ aside {
         padding: 5px 10px;
     }
     .img-lives {
-        width: 25px;
+        width: 40px;
     }
     .keyboardBtn {
-        font-size: 1.3em;
-        padding: 10px 15px;
+        font-size: 1.1em;
+        padding: 6px 13px;
     }
     .border-right {
         border-right: none !important;
@@ -282,7 +282,8 @@ aside {
         line-height: 1em;
     }
     #mobile-dp {
-        background: black;
+        background: #2e2e2e;
+        border-radius: 35px;
         height: 200px;
     }
 }

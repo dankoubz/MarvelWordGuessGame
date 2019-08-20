@@ -7,8 +7,8 @@ window.onload = function() {
     // Marvel themed object array
     var marvel = {
         characters: ["thor", "iron man", "hulk"],
-        movies: ["Iron Man", "Avengers Age of Ultron", "Guardians of the Galaxy"],
-        quotes: ["I am Iron Man", "Hulk like raging fire", "Your friendly neighbourhood Spiderman"]
+        movies: ["iron man", "avengers age of ultron", "guardians of the galaxy"],
+        quotes: ["i am iron man", "hulk like raging fire", "your friendly neighbourhood spiderman"]
     };
     // var for keyboard
     var alphabet = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i',
@@ -33,6 +33,7 @@ window.onload = function() {
     // Get elements from the page
     var showLives = document.getElementById("mylives");
     var showCatagory = document.getElementById("scatagory");
+    var clickBtnMobile = document.getElementById("mobileBtn");
 
     // Key up on start 
     document.onkeyup = function startGame() {
@@ -48,6 +49,13 @@ window.onload = function() {
         } else if (gameMode === "false") {
             console.log("your game is already loaded");
         }
+    }
+
+    // Go to game screen mobile
+    clickBtnMobile.onclick = function() {
+        document.getElementById("welcome").style.display = "none";
+        // add display block for main game content
+        document.getElementById("main-game").style.display = "block";
     }
 
     // Generate an alphabet keyboard
@@ -76,11 +84,10 @@ window.onload = function() {
     }
 
     // On Click function
-    checkOnClick = function() {
-
+    checkOnClick = function(e) {
         // get list.onclick run function
-        keys.onclick = function() {
-            // Can't guess if no lives left
+        keys.onclick = function(status) {
+
             if (lives <= 0) {
                 console.log('Dead player');
                 return;
@@ -115,7 +122,9 @@ window.onload = function() {
             }
 
             // Update Lives, etc.
-            stateOfGame();
+            stateOfGame("onPlay");
+
+
         }
     }
 
@@ -196,24 +205,47 @@ window.onload = function() {
     }
 
     // Show lives
-    stateOfGame = function() {
-        // display current lives
+    stateOfGame = function(status) {
 
+        // if (status === "refresh") {
+        //     switch (lives) {
+        //         case 5:
+        //             document.getElementById("life-1").classList.add("d-inline-block");
+        //             document.getElementById("life-2").classList.add("d-inline-block");
+        //             document.getElementById("life-3").classList.add("d-inline-block");
+        //             document.getElementById("life-4").classList.add("d-inline-block");
+        //             document.getElementById("life-5").classList.add("d-inline-block");
+        //             break;
+        //             console.info("Full Lives");
+        //             break;
+        //         default:
+        //             console.warn("Unexpected Life Tally - " + lives);
+        //     }
+        // }
+
+        // if (status === "onPlay") {
         // Hide life markers
+
+        console.log(lives + " 666");
         switch (lives) {
             case 0:
                 document.getElementById("life-1").classList.add("d-none");
+                document.getElementById("life-1").classList.remove("d-inline-block");
             case 1:
                 document.getElementById("life-2").classList.add("d-none");
+                document.getElementById("life-2").classList.remove("d-inline-block");
             case 2:
                 document.getElementById("life-3").classList.add("d-none");
+                document.getElementById("life-3").classList.remove("d-inline-block");
             case 3:
                 document.getElementById("life-4").classList.add("d-none");
+                document.getElementById("life-4").classList.remove("d-inline-block");
             case 4:
                 document.getElementById("life-5").classList.add("d-none");
+                document.getElementById("life-5").classList.remove("d-inline-block");
                 break;
             case 5:
-                console.info("Full Lives");
+                console.info("lives are full");
                 break;
             default:
                 console.warn("Unexpected Life Tally - " + lives);
@@ -227,7 +259,7 @@ window.onload = function() {
             gameScore("-1");
         }
 
-        //for (var i = 0; i < guesses.length; i++) {
+        // look at spaces and guess length - innner html change you win
         if (counter + space === guesses.length) {
             showLives.innerHTML = "You Win!";
 
@@ -306,14 +338,34 @@ window.onload = function() {
         // set auto level
         autoEasy("easy");
         // check state of game
-        stateOfGame("auto");
+        stateOfGame();
+
     }
+
     play();
 
     // reset
-    document.getElementById('reset').onclick = function() {
+    document.getElementById("reset").onclick = function() {
+        correct.parentNode.removeChild(correct);
+        letters.parentNode.removeChild(letters);
 
-        initaliseRound();
+        lives = 6
+        switch (lives) {
+            case 6:
+                document.getElementById("life-1").classList.add("d-inline-block");
+                document.getElementById("life-2").classList.add("d-inline-block");
+                document.getElementById("life-3").classList.add("d-inline-block");
+                document.getElementById("life-4").classList.add("d-inline-block");
+                document.getElementById("life-5").classList.add("d-inline-block");
+                break;
+                console.info("Full Lives");
+                break;
+            default:
+                console.warn("Unexpected Life Tally - " + lives);
+        }
+
+        // reset the images.
+        play();
     }
 
 }
